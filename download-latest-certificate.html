@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Download Latest Certificate</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+      background-color: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #d32f2f;
+      margin-bottom: 20px;
+    }
+
+    .btn-download {
+      background-color: #d32f2f;
+      color: white;
+      padding: 12px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn-download:hover {
+      background-color: #b71c1c;
+    }
+
+    .message {
+      color: #777;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Download Your Latest Certificate</h2>
+    <button class="btn-download" id="downloadBtn">Download</button>
+    <p class="message" id="statusMsg"></p>
+  </div>
+
+  <script>
+    const { jsPDF } = window.jspdf;
+
+    async function fetchLatestCertificate() {
+      try {
+        const [profileRes, certRes] = await Promise.all([
+          fetch("/api/donor/profile"),
+          fetch("/api/donor/certificates")
+        ]);
+
+        if (!profileRes.ok || !certRes.ok) throw new Error("Unauthorized");
+
+        const user = await profileRes.json();
+        const certificates = await certRes.json();
+
+        if (certificates.length === 0) {
+          document.getElementById("statusMsg").textContent = "No certificates available.";
+          return null;
+        }
+
+        const latest = certificates[0];
+        return { user, cert: latest };
+      } catch (error) {
+        console.error("Error:", error);
+        document.getElementById("statusMsg").textContent = "Error fetching certificate. Please log in again.";
+        return null;
+      }
+    }
+
+    async function generatePDF() {
+      const data = await fetchLatestCertificate();
+      if (!data) return;
+
+      const { user, cert } = data;
+      const fullName = `${user.first_name} ${user.last_name}`;
+      const certId = `CERT-${new Date(cert.date).getFullYear()}-${cert.date.replace(/-/g, '')}`;
+
+      const doc = new jsPDF();
+      doc.setFontSize(18);
+      doc.setTextColor(211, 47, 47);
+      doc.text("Blood Donation Certificate", 20, 30);
+
+      doc.setFontSize(12);
+      doc.setTextColor(33, 33, 33);
+      doc.text(`This is to certify that ${fullName} donated blood on ${cert.date}`, 20, 50);
+      doc.text(`Location: ${cert.location}`, 20, 60);
+      doc.text(`Status: ${cert.status}`, 20, 70);
+      doc.text("Thank you for your generous contribution to saving lives.", 20, 85);
+      doc.text("Issued by: Blood Script Ireland", 20, 105);
+      doc.setFontSize(10);
+      doc.text(`Certificate ID: ${certId}`, 20, 120);
+
+      doc.save(`${fullName.replace(" ", "_")}_Certificate_${cert.date}.pdf`);
+    }
+
+    document.getElementById("downloadBtn").addEventListener("click", generatePDF);
+  </script>
+</body>
+</html>

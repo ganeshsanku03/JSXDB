@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donation History - Blood Script</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #d32f2f;
+      margin-bottom: 25px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #d32f2f;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f5f5f5;
+    }
+
+    .no-data {
+      text-align: center;
+      color: #777;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Your Donation History</h2>
+    <table id="historyTable">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Location</th>
+          <th>Component</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Donation rows will go here -->
+      </tbody>
+    </table>
+    <p class="no-data" id="noData" style="display: none;">No donation history found.</p>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const tableBody = document.querySelector("#historyTable tbody");
+      const noData = document.getElementById("noData");
+
+      try {
+        const response = await fetch("/api/donor/donation-history");
+        const donations = await response.json();
+
+        if (!Array.isArray(donations) || donations.length === 0) {
+          noData.style.display = "block";
+          return;
+        }
+
+        donations.forEach(donation => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${new Date(donation.date).toLocaleDateString()}</td>
+            <td>${donation.location}</td>
+            <td>${donation.component || "Whole Blood"}</td>
+            <td>${donation.status}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      } catch (err) {
+        console.error("Error loading donation history:", err);
+        noData.textContent = "Failed to load donation history.";
+        noData.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>

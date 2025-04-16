@@ -1,0 +1,103 @@
+/* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* Navigation Bar */
+#nav-bar {
+  background-color: #d9534f;
+  padding: 15px 0;
+  text-align: center;
+}
+
+#nav-bar a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 15px;
+  padding: 10px;
+  transition: 0.3s;
+}
+
+#nav-bar a:hover {
+  background-color: #c9302c;
+  border-radius: 5px;
+}
+
+/* Main Heading */
+#main-content {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+#main-content h1 {
+  font-size: 36px;
+  color: #444;
+}
+
+#main-content p {
+  font-size: 18px;
+  color: #666;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+/* Support Info Box */
+#contact-support-details {
+  max-width: 800px;
+  margin: 30px auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+#contact-support-details h2 {
+  color: #d9534f;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#contact-support-details p {
+  margin-bottom: 10px;
+}
+
+#contact-support-details a {
+  color: #d9534f;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+#contact-support-details a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+#main-footer {
+  background: #333;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}
+
+.footer-links a {
+  color: #ccc;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+.footer-links a:hover {
+  color: white;
+}

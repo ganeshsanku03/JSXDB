@@ -1,0 +1,144 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    background-color: #f8f9fa;
+    color: #333;
+  }
+  
+  /* Navigation Bar */
+  #nav-bar {
+    background-color: #d9534f;
+    padding: 15px 0;
+    text-align: center;
+  }
+  
+  #nav-bar a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 15px;
+    padding: 10px;
+    transition: 0.3s;
+  }
+  
+  #nav-bar a:hover {
+    background-color: #c9302c;
+    border-radius: 5px;
+  }
+  
+  /* Login & Signup Container */
+  #login-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  #login-box h2,
+  #signup-box h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #d9534f;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  label {
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .mobile-group {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .mobile-group span {
+    background-color: #eee;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+  
+  .mobile-group input {
+    flex: 1;
+  }
+  
+  /* Buttons */
+  button {
+    background-color: #d9534f;
+    color: white;
+    padding: 12px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  button:hover {
+    background-color: #c9302c;
+  }
+  
+  /* Hide Signup Initially */
+  .hidden {
+    display: none;
+  }
+  
+  /* Extra links (forgot password, signup) */
+  .form-links {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+  }
+  
+  .form-links a {
+    color: #d9534f;
+    text-decoration: none;
+  }
+  
+  .form-links a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Footer */
+  #main-footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 40px;
+  }
+  
+  .footer-links a {
+    color: #ccc;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+  
+  .footer-links a:hover {
+    color: white;
+  }  

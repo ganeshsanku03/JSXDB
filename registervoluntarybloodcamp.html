@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register Voluntary Blood Camp - Blood Script</title>
+  <link rel="stylesheet" href="css/registervoluntarybloodcamp.css">
+  <script defer src="js/registervoluntarybloodcamp.js"></script>
+  <style>
+    .mobile-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .mobile-group span {
+      background-color: #eee;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .mobile-group input {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <div id="nav-bar">
+    <a href="index.html" id="logo">Blood Script</a>
+    <a href="aboutUs.html">About Us</a>
+    <a href="contactus.html">Contact Us</a>
+  </div>
+
+  <!-- Main Content -->
+  <div id="main-content">
+    <h1>Register Voluntary Blood Camp</h1>
+    <p>Fill in the details below to register your blood donation camp.</p>
+  </div>
+
+  <!-- Registration Form -->
+  <div id="registration-container">
+    <form id="camp-registration-form">
+      <label for="org-type">Organization Type: *</label>
+      <select id="org-type" name="orgType" required>
+        <option value="" disabled selected>Select value</option>
+        <option value="Hospital">Hospital</option>
+        <option value="NGO">NGO</option>
+        <option value="Corporate">Corporate</option>
+        <option value="Educational Institution">Educational Institution</option>
+      </select>
+
+      <label for="org-name">Organization Name: *</label>
+      <input type="text" id="org-name" name="orgName" required>
+
+      <label for="organizer-name">Organizer Name: *</label>
+      <input type="text" id="organizer-name" name="organizerName" required>
+
+      <label for="contact-role">Contact Person Role: *</label>
+      <input type="text" id="contact-role" name="contactRole" required>
+
+      <label for="organizer-mobile">Organizer Mobile No: *</label>
+      <div class="mobile-group">
+        <span>+353</span>
+        <input type="tel" id="organizer-mobile" name="organizerMobile" required pattern="[0-9]{9}" placeholder="e.g. 871234567">
+      </div>
+
+      <label for="organizer-email">Organizer Email Id: *</label>
+      <input type="email" id="organizer-email" name="organizerEmail" required>
+
+      <label for="co-organizer-name">Co-Organizer Name: (Optional)</label>
+      <input type="text" id="co-organizer-name" name="coOrganizerName">
+
+      <label for="co-organizer-mobile">Co-Organizer Mobile: (Optional)</label>
+      <div class="mobile-group">
+        <span>+353</span>
+        <input type="tel" id="co-organizer-mobile" name="coOrganizerMobile" pattern="[0-9]{9}" placeholder="e.g. 871234567">
+      </div>
+
+      <label for="camp-name">Camp Name: *</label>
+      <input type="text" id="camp-name" name="campName" required>
+
+      <label for="camp-address">Camp Address: *</label>
+      <textarea id="camp-address" name="campAddress" required></textarea>
+
+      <label for="county">County: *</label>
+      <select id="county" name="county" required>
+        <option value="" disabled selected>Select County</option>
+        <option value="Dublin">Dublin</option>
+        <option value="Cork">Cork</option>
+        <option value="Galway">Galway</option>
+        <option value="Limerick">Limerick</option>
+      </select>
+
+      <label for="eircode">EIR Code: *</label>
+      <input type="text" id="eircode" name="eircode" required>
+
+      <label for="bloodbank">Blood Bank: *</label>
+      <select id="bloodbank" name="bloodBank" required>
+        <option value="" disabled selected>Select Blood Bank</option>
+        <option value="Irish Blood Transfusion Service">Irish Blood Transfusion Service</option>
+        <option value="Red Cross Blood Bank">Red Cross Blood Bank</option>
+        <option value="HSE Blood Donation Centre">HSE Blood Donation Centre</option>
+      </select>
+
+      <label for="camp-date">Camp Propose Date: *</label>
+      <input type="date" id="camp-date" name="campDate" required>
+
+      <label>Start Time (24HH:MM): *</label>
+      <input type="number" id="start-hour" name="startHour" min="00" max="23" required placeholder="HH">
+      <input type="number" id="start-minute" name="startMinute" min="00" max="59" required placeholder="MM">
+
+      <label>End Time (24HH:MM): *</label>
+      <input type="number" id="end-hour" name="endHour" min="00" max="23" required placeholder="HH">
+      <input type="number" id="end-minute" name="endMinute" min="00" max="59" required placeholder="MM">
+
+      <label for="preferred-slot">Preferred Time Slot:</label>
+      <select id="preferred-slot" name="preferredSlot">
+        <option value="" disabled selected>Select</option>
+        <option value="Morning">Morning</option>
+        <option value="Afternoon">Afternoon</option>
+        <option value="Evening">Evening</option>
+      </select>
+
+      <label for="refreshments">Refreshments Provided?</label>
+      <select id="refreshments" name="refreshments">
+        <option value="" disabled selected>Select</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+
+      <label for="accessibility">Wheelchair Accessible?</label>
+      <select id="accessibility" name="accessibility">
+        <option value="" disabled selected>Select</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+
+      <label for="participants">Estimated Participants: *</label>
+      <input type="number" id="participants" name="participants" required min="1">
+
+      <label for="expected-units">Expected Blood Units:</label>
+      <input type="number" id="expected-units" name="expectedUnits" min="1" />
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer id="main-footer">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="aboutUs.html">About Us</a>
+      <a href="contactus.html">Contact Us</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+    </div>
+    <p>&copy; 2025 Blood Script. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

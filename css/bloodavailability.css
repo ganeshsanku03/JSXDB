@@ -1,0 +1,135 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    background-color: #f8f9fa;
+    color: #333;
+  }
+  
+  /* Navigation Bar */
+  #nav-bar {
+    background-color: #d9534f;
+    padding: 15px 0;
+    text-align: center;
+  }
+  
+  #nav-bar a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 15px;
+    padding: 10px;
+    transition: 0.3s;
+  }
+  
+  #nav-bar a:hover {
+    background-color: #c9302c;
+    border-radius: 5px;
+  }
+  
+  #logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Main Content */
+  #main-content {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  
+  #main-content-h1 {
+    font-size: 36px;
+    color: #444;
+  }
+  
+  #main-content p {
+    font-size: 18px;
+    color: #666;
+    margin-top: 10px;
+    font-style: italic;
+  }
+  
+  /* Blood Availability Form */
+  #blood-availability-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  #blood-availability-container h2 {
+    text-align: center;
+    color: #d9534f;
+  }
+  
+  #blood-availability-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  #blood-availability-form select,
+  #blood-availability-form button {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+  }
+  
+  #blood-availability-form button {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  #blood-availability-form button:hover {
+    background-color: #c9302c;
+  }
+  
+  /* Availability Results */
+  #availability-results {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  #results-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  #results-table th, #results-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  #results-table th {
+    background: #d9534f;
+    color: white;
+  }
+  
+  #results-table tbody tr:nth-child(even) {
+    background: #f2f2f2;
+  }
+  
+  /* Footer */
+  #main-footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 15px;
+  }
+  

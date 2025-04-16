@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donations Overview - Admin</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #d32f2f;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .chart-container {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto 40px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    .table-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    th, td {
+      padding: 12px 15px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
+
+    th {
+      background-color: #d32f2f;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin: 20px;
+      background-color: #1976D2;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      background-color: #1565C0;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Donation Statistics</h2>
+
+  <div class="chart-container">
+    <canvas id="donationChart"></canvas>
+  </div>
+
+  <div class="table-container">
+    <table id="donationTable">
+      <thead>
+        <tr>
+          <th>Donor Name</th>
+          <th>Date</th>
+          <th>Location</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Data will be loaded here -->
+      </tbody>
+    </table>
+  </div>
+
+  <a href="admin-dashboard.html" class="back-btn">← Back to Dashboard</a>
+
+  <script>
+    async function loadDonations() {
+      try {
+        const res = await fetch("/api/admin/donations");
+        const data = await res.json();
+
+        const tableBody = document.querySelector("#donationTable tbody");
+        tableBody.innerHTML = "";
+
+        const monthlyCounts = {};
+
+        data.forEach(donation => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${donation.first_name} ${donation.last_name}</td>
+            <td>${new Date(donation.date).toLocaleDateString()}</td>
+            <td>${donation.location}</td>
+            <td>${donation.status}</td>
+          `;
+          tableBody.appendChild(row);
+
+          const month = new Date(donation.date).toLocaleString("default", { month: "short", year: "numeric" });
+          monthlyCounts[month] = (monthlyCounts[month] || 0) + 1;
+        });
+
+        renderChart(monthlyCounts);
+      } catch (err) {
+        console.error("Error loading donation data:", err);
+        alert("Failed to load donation data.");
+      }
+    }
+
+    function renderChart(monthlyCounts) {
+      const ctx = document.getElementById("donationChart").getContext("2d");
+
+      new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: Object.keys(monthlyCounts),
+          datasets: [{
+            label: "Donations per Month",
+            data: Object.values(monthlyCounts),
+            backgroundColor: "#d32f2f"
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                precision: 0
+              }
+            }
+          }
+        }
+      });
+    }
+
+    loadDonations();
+  </script>
+
+</body>
+</html>

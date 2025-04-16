@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Manage Blood Requests - Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    h2 {
+      text-align: center;
+      color: #d32f2f;
+      margin: 20px 0;
+    }
+
+    .table-container {
+      max-width: 1200px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background-color: #d32f2f;
+      color: white;
+    }
+
+    .btn {
+      padding: 6px 10px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .btn-approve {
+      background-color: #4CAF50;
+    }
+
+    .btn-reject {
+      background-color: #e53935;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin: 20px;
+      padding: 10px 16px;
+      background-color: #1976D2;
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    .back-btn:hover {
+      background-color: #125aa3;
+    }
+  </style>
+</head>
+<body>
+  <h2>Manage Blood Requests</h2>
+
+  <div class="table-container">
+    <table id="requestTable">
+      <thead>
+        <tr>
+          <th>Request ID</th>
+          <th>Requester</th>
+          <th>Blood Type</th>
+          <th>Component</th>
+          <th>Units</th>
+          <th>Hospital</th>
+          <th>County</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Requests will be populated dynamically -->
+      </tbody>
+    </table>
+  </div>
+
+  <a href="admin-dashboard.html" class="back-btn">← Back to Dashboard</a>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      const tableBody = document.querySelector("#requestTable tbody");
+
+      async function loadRequests() {
+        try {
+          const res = await fetch("/api/admin/blood-requests");
+          const data = await res.json();
+
+          tableBody.innerHTML = "";
+
+          if (!data.length) {
+            tableBody.innerHTML = `<tr><td colspan="9">No blood requests found.</td></tr>`;
+            return;
+          }
+
+          data.forEach(req => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+              <td>${req.id}</td>
+              <td>${req.full_name}</td>
+              <td>${req.blood_group}</td>
+              <td>${req.component}</td>
+              <td>${req.units}</td>
+              <td>${req.hospital}</td>
+              <td>${req.county}</td>
+              <td>${req.status}</td>
+              <td>
+                ${req.status === "Pending" ? `
+                  <button class="btn btn-approve" onclick="updateStatus(${req.id}, 'Approved')">Approve</button>
+                  <button class="btn btn-reject" onclick="updateStatus(${req.id}, 'Rejected')">Reject</button>
+                ` : `<span style="color: gray;">No Actions</span>`}
+              </td>
+            `;
+            tableBody.appendChild(row);
+          });
+        } catch (err) {
+          console.error("Error loading requests:", err);
+          tableBody.innerHTML = `<tr><td colspan="9">Error fetching data</td></tr>`;
+        }
+      }
+
+      window.updateStatus = async function (id, status) {
+        try {
+          const res = await fetch(`/api/admin/blood-requests/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status })
+          });
+
+          const result = await res.json();
+          alert(result.message);
+          loadRequests();
+        } catch (err) {
+          console.error("Update failed", err);
+          alert("Failed to update request.");
+        }
+      };
+
+      loadRequests();
+    });
+  </script>
+</body>
+</html>

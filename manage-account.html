@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Account</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      color: #d32f2f;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input {
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      background-color: #d32f2f;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #b71c1c;
+    }
+
+    .message {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .success {
+      color: green;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Change Password</h2>
+    <form id="passwordForm">
+      <label for="currentPassword">Current Password:</label>
+      <input type="password" id="currentPassword" required />
+
+      <label for="newPassword">New Password:</label>
+      <input type="password" id="newPassword" required />
+
+      <label for="confirmPassword">Confirm New Password:</label>
+      <input type="password" id="confirmPassword" required />
+
+      <button type="submit">Update Password</button>
+      <div id="msgBox" class="message"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("passwordForm");
+    const msgBox = document.getElementById("msgBox");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const currentPassword = document.getElementById("currentPassword").value;
+      const newPassword = document.getElementById("newPassword").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      if (newPassword !== confirmPassword) {
+        msgBox.textContent = "New passwords do not match!";
+        msgBox.className = "message error";
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/donor/change-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ currentPassword, newPassword })
+        });
+
+        const result = await res.json();
+        msgBox.textContent = result.message;
+        msgBox.className = "message " + (res.ok ? "success" : "error");
+
+        if (res.ok) {
+          form.reset();
+        }
+      } catch (err) {
+        console.error("Password change error:", err);
+        msgBox.textContent = "Error updating password.";
+        msgBox.className = "message error";
+      }
+    });
+  </script>
+</body>
+</html>

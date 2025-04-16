@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donation Certificates</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #d32f2f;
+      margin-bottom: 30px;
+    }
+
+    .cert-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .cert-card {
+      border: 1px solid #ddd;
+      border-left: 5px solid #d32f2f;
+      padding: 20px;
+      border-radius: 5px;
+      background-color: #fafafa;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cert-details {
+      flex: 1;
+    }
+
+    .cert-details h4 {
+      margin: 0 0 5px;
+      color: #333;
+    }
+
+    .cert-details p {
+      margin: 3px 0;
+      font-size: 14px;
+    }
+
+    .btn-download {
+      background-color: #d32f2f;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+
+    .btn-download:hover {
+      background-color: #b71c1c;
+    }
+
+    .no-certificates {
+      text-align: center;
+      color: #888;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Donation Certificates</h2>
+    <div id="certificateContainer" class="cert-list"></div>
+    <div id="noCertificates" class="no-certificates" style="display: none;">
+      No certificates available yet.
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', async () => {
+      const { jsPDF } = window.jspdf;
+  
+      const container = document.getElementById("certificateContainer");
+      const noCertMsg = document.getElementById("noCertificates");
+  
+      let fullName = "Donor";
+  
+      // 1. Fetch certificates from server
+      try {
+        const certRes = await fetch("/api/donor/certificates");
+        if (!certRes.ok) throw new Error("Unauthorized");
+  
+        const certs = await certRes.json();
+  
+        // 2. Fetch donor name
+        const profileRes = await fetch("/api/donor/profile");
+        if (!profileRes.ok) throw new Error("Unauthorized");
+  
+        const profile = await profileRes.json();
+        fullName = `${profile.first_name} ${profile.last_name}`;
+  
+        if (certs.length === 0) {
+          noCertMsg.style.display = "block";
+        } else {
+          certs.forEach((cert, index) => {
+            const certCard = document.createElement("div");
+            certCard.className = "cert-card";
+  
+            certCard.innerHTML = `
+              <div class="cert-details">
+                <h4>Donation on ${cert.date}</h4>
+                <p><strong>Location:</strong> ${cert.location}</p>
+                <p><strong>Status:</strong> ${cert.status}</p>
+                <p><strong>Component:</strong> ${cert.component}</p>
+              </div>
+              <button class="btn-download" data-index="${index}">Download</button>
+            `;
+  
+            container.appendChild(certCard);
+  
+            // Add download functionality
+            document.querySelectorAll(".btn-download").forEach(button => {
+              button.addEventListener("click", () => {
+                const idx = parseInt(button.getAttribute("data-index"));
+                downloadPDF(certs[idx], idx);
+              });
+            });
+          });
+        }
+  
+      } catch (err) {
+        console.error("Error loading certificates:", err);
+        noCertMsg.style.display = "block";
+        noCertMsg.textContent = "Please login to view your certificates.";
+      }
+  
+      function downloadPDF(cert, index) {
+        const doc = new jsPDF();
+  
+        doc.setFontSize(18);
+        doc.setTextColor(211, 47, 47);
+        doc.text("Blood Donation Certificate", 20, 30);
+  
+        doc.setFontSize(12);
+        doc.setTextColor(33, 33, 33);
+        doc.text(`This is to certify that ${fullName} donated blood on ${cert.date}`, 20, 50);
+        doc.text(`Location: ${cert.location}`, 20, 60);
+        doc.text(`Status: ${cert.status}`, 20, 70);
+        doc.text(`Component: ${cert.component || 'N/A'}`, 20, 80);
+        doc.text("Thank you for your generous contribution to saving lives.", 20, 85);
+        doc.text("Issued by: Blood Script Ireland", 20, 105);
+  
+        const certId = `CERT-${index + 1}-${cert.date.replace(/-/g, '')}`;
+        doc.setFontSize(10);
+        doc.text(`Certificate ID: ${certId}`, 20, 120);
+  
+        doc.save(`${fullName.replace(" ", "_")}_Donation_Certificate_${cert.date}.pdf`);
+      }
+    });
+  </script>  
+</body>
+</html>

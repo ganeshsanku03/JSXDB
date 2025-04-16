@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blood Donation Camps - Blood Script</title>
+  <link rel="stylesheet" href="css/blooddonationcamp.css" />
+  <script defer src="js/blooddonationcamp.js"></script>
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <div id="nav-bar">
+    <a href="index.html" id="logo">Blood Script</a>
+    <a href="aboutUs.html">About Us</a>
+    <a href="contactus.html">Contact Us</a>
+  </div>
+
+  <!-- Main Content -->
+  <div id="main-content">
+    <h1>Find Blood Donation Camps</h1>
+    <p><q>Search upcoming blood donation camps happening in your county.</q></p>
+  </div>
+
+  <!-- Camp Search -->
+  <div id="camp-search-container">
+    <h2>Search for Camps by County</h2>
+    <form id="camp-search-form">
+      <label for="county">County:</label>
+      <select id="county" name="county" required>
+        <option value="" disabled selected>Select County</option>
+        <option value="Dublin">Dublin</option>
+        <option value="Cork">Cork</option>
+        <option value="Galway">Galway</option>
+        <option value="Limerick">Limerick</option>
+        <option value="Waterford">Waterford</option>
+        <option value="Kilkenny">Kilkenny</option>
+        <option value="Donegal">Donegal</option>
+        <option value="Mayo">Mayo</option>
+        <option value="Wexford">Wexford</option>
+      </select>
+      <button type="submit">Find Camps</button>
+    </form>
+  </div>
+
+  <!-- Results -->
+  <div id="camp-results">
+    <h2>Upcoming Blood Donation Camps</h2>
+    <p id="no-camps-msg" style="display: none; color: red;">No camps found for the selected county.</p>
+    <table id="results-table" style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+      <thead>
+        <tr>
+          <th>Camp Name</th>
+          <th>Organization</th>
+          <th>Address</th>
+          <th>County</th>
+          <th>Date</th>
+          <th>Time</th>
+          <th>Contact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- JS will populate rows here -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Footer -->
+  <footer id="main-footer">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="aboutUs.html">About Us</a>
+      <a href="contactus.html">Contact Us</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+    </div>
+    <p>&copy; 2025 Blood Script. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

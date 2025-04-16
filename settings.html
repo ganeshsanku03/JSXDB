@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Settings</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      padding: 30px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #d32f2f;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="password"], select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .btn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 10px;
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #b71c1c;
+    }
+
+    .message {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 30px;
+      text-align: center;
+      background-color: #1976D2;
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 4px;
+    }
+
+    .back-btn:hover {
+      background-color: #1565C0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Admin Settings</h2>
+
+    <form id="passwordForm">
+      <label for="oldPassword">Current Password</label>
+      <input type="password" id="oldPassword" required>
+
+      <label for="newPassword">New Password</label>
+      <input type="password" id="newPassword" required>
+
+      <button type="submit" class="btn">Update Password</button>
+    </form>
+
+    <div class="message" id="msgBox"></div>
+
+    <div style="text-align:center;">
+      <a href="admin-dashboard.html" class="back-btn">← Back to Dashboard</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("passwordForm");
+    const msgBox = document.getElementById("msgBox");
+
+    form.addEventListener("submit", async function(e) {
+      e.preventDefault();
+      msgBox.textContent = "";
+
+      const oldPassword = document.getElementById("oldPassword").value;
+      const newPassword = document.getElementById("newPassword").value;
+
+      try {
+        const res = await fetch("/api/admin/update-password", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ oldPassword, newPassword })
+        });
+
+        const result = await res.json();
+        msgBox.textContent = result.message;
+        msgBox.style.color = res.ok ? "green" : "red";
+
+        if (res.ok) form.reset();
+      } catch (err) {
+        msgBox.textContent = "An error occurred.";
+        msgBox.style.color = "red";
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Request Blood - Blood Script</title>
+  <link rel="stylesheet" href="css/blood-request.css" />
+  <script defer src="js/blood-request.js"></script>
+  <style>
+    .mobile-group {
+      display: flex;
+      gap: 10px;
+    }
+    .mobile-group span {
+      background-color: #eee;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+    }
+    .mobile-group input {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <div id="nav-bar">
+    <a href="index.html" id="logo">Blood Script</a>
+    <a href="aboutUs.html">About Us</a>
+    <a href="contactus.html">Contact Us</a>
+  </div>
+
+  <!-- Main Content -->
+  <div id="main-content">
+    <h1>Request Blood</h1>
+    <p>Fill out the form below if you or someone you know is in need of blood.</p>
+  </div>
+
+  <!-- Request Form -->
+  <div id="request-form-container">
+    <h2>Blood Request Form</h2>
+    <form id="blood-request-form">
+      <label for="full_name">Patient Name:</label>
+      <input type="text" id="full_name" name="full_name" required />
+
+      <label for="hospital">Hospital Name:</label>
+      <input type="text" id="hospital" name="hospital" required />
+
+      <label for="county">County:</label>
+      <select id="county" name="county" required>
+        <option value="">Select County</option>
+        <option value="Dublin">Dublin</option>
+        <option value="Cork">Cork</option>
+        <option value="Galway">Galway</option>
+        <option value="Limerick">Limerick</option>
+        <option value="Waterford">Waterford</option>
+        <option value="Kilkenny">Kilkenny</option>
+        <option value="Donegal">Donegal</option>
+        <option value="Mayo">Mayo</option>
+        <option value="Wexford">Wexford</option>
+      </select>
+
+      <label for="blood_group">Blood Type:</label>
+      <select id="blood_group" name="blood_group" required>
+        <option value="">Select Blood Type</option>
+        <option value="A+">A+</option>
+        <option value="O+">O+</option>
+        <option value="B+">B+</option>
+        <option value="AB+">AB+</option>
+        <option value="A-">A-</option>
+        <option value="O-">O-</option>
+        <option value="B-">B-</option>
+        <option value="AB-">AB-</option>
+      </select>
+
+      <label for="component">Blood Component:</label>
+      <select id="component" name="component" required>
+        <option value="">Select Component</option>
+        <option value="Whole Blood">Whole Blood</option>
+        <option value="Red Blood Cells">Red Blood Cells</option>
+        <option value="Plasma">Plasma</option>
+        <option value="Platelets">Platelets</option>
+      </select>
+
+      <label for="units">Units Needed:</label>
+      <input type="number" id="units" name="units" min="1" required />
+
+      <label for="mobile">Contact Number:</label>
+      <div class="mobile-group">
+        <span>+353</span>
+        <input type="tel" id="mobile" name="mobile" pattern="[0-9]{9}" required placeholder="Enter 9-digit Irish number (e.g. 871234567)" />
+      </div>
+
+      <label for="email">Email ID:</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="required_date">Required Date:</label>
+      <input type="date" id="required_date" name="required_date" required />
+
+      <label for="reason">Additional Remarks:</label>
+      <textarea id="reason" name="reason" placeholder="Optional..."></textarea>
+
+      <button type="submit">Submit Request</button>
+    </form>
+  </div>
+
+  <!-- Footer -->
+  <footer id="main-footer">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="aboutUs.html">About Us</a>
+      <a href="contactus.html">Contact Us</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms & Conditions</a>
+    </div>
+    <p>&copy; 2025 Blood Script. All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>

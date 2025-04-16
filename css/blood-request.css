@@ -1,0 +1,130 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    background-color: #f8f9fa;
+    color: #333;
+  }
+  
+  /* Navigation Bar */
+  #nav-bar {
+    background-color: #d9534f;
+    padding: 15px 0;
+    text-align: center;
+  }
+  
+  #nav-bar a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 15px;
+    padding: 10px;
+    transition: 0.3s;
+  }
+  
+  #nav-bar a:hover {
+    background-color: #c9302c;
+    border-radius: 5px;
+  }
+  
+  #logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Main Content */
+  #main-content {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  
+  #main-content h1 {
+    font-size: 36px;
+    color: #444;
+  }
+  
+  #main-content p {
+    font-size: 18px;
+    color: #666;
+    margin-top: 10px;
+    font-style: italic;
+  }
+  
+  /* Blood Request Form */
+  #request-form-container {
+    max-width: 800px;
+    margin: 30px auto;
+    background-color: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  #request-form-container h2 {
+    text-align: center;
+    color: #d9534f;
+    margin-bottom: 20px;
+  }
+  
+  #blood-request-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  #blood-request-form label {
+    font-weight: bold;
+  }
+  
+  #blood-request-form input,
+  #blood-request-form select,
+  #blood-request-form textarea {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  #blood-request-form textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  
+  #blood-request-form button {
+    padding: 12px;
+    font-size: 16px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  #blood-request-form button:hover {
+    background-color: #c9302c;
+  }
+  
+  /* Footer */
+  #main-footer {
+    background: #333;
+    color: white;
+    text-align: center;
+    padding: 15px;
+  }
+  
+  .footer-links a {
+    color: #ccc;
+    text-decoration: none;
+    margin: 0 10px;
+  }
+  
+  .footer-links a:hover {
+    color: white;
+  }  
