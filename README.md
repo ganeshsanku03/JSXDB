@@ -32,7 +32,7 @@ It lets hospitals check stock, organisers post camps, donors manage their profil
 
 ```bash
 # 1) Clone
-git clone https://github.com/<your‑handle>/blood-script.git  --- will add later
+git clone https://github.com/ganeshsanku03/JSXDB 
 cd blood-script
 
 # 2) Install deps
